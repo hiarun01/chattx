@@ -1,11 +1,32 @@
-import {Button} from "@/components/ui/button";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import Auth from "./pages/auth";
+import {Navigate} from "react-router-dom";
+import Profile from "./pages/profile";
+import Chat from "./pages/chat";
+
+const router = createBrowserRouter([
+  {
+    path: "/auth",
+    element: <Auth />,
+  },
+  {
+    path: "*",
+    element: <Navigate to="/auth" />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+  },
+  {
+    path: "/chat",
+    element: <Chat />,
+  },
+]);
 
 const App = () => {
   return (
     <>
-      <div className="flex flex-col items-center justify-center min-h-svh">
-        <h1>Chattx</h1>
-      </div>
+      <RouterProvider router={router} />
     </>
   );
 };
