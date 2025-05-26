@@ -10,7 +10,7 @@ const Auth = () => {
           <h1 className="font-bold text-2xl">Welcome!</h1>
           <p className="">Fill in the details!</p>
         </div>
-        <Tabs className="md:h-fit sm:h-fit">
+        <Tabs defaultValue="login" className="md:h-fit sm:h-fit">
           <TabsList className="flex justify-center w-full h-fit">
             <TabsTrigger
               value="login"
