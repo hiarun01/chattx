@@ -2,7 +2,48 @@ import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 
+import {useState} from "react";
+
 const Auth = () => {
+  const [login, setLogin] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [signup, setSignup] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  // login onChange handler
+
+  const loginOnChangeHanlder = (e) => {
+    const {name, value} = e.target;
+    setLogin((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // login onChange handler
+
+  const singupOnChangeHanlder = (e) => {
+    const {name, value} = e.target;
+    setSignup((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const loginHandler = () => {
+    console.log(login);
+  };
+
+  const signupHandler = () => {
+    console.log(signup);
+  };
+
   return (
     <div className="h-[100vh] w-[100vw] flex items-center justify-center">
       <div className=" lg:w-2xl items-center w-full mx-5 border rounded-2xl shadow-2xs p-5">
@@ -31,16 +72,25 @@ const Auth = () => {
             value="login"
           >
             <Input
-              type="email"
+              type={login.email}
+              onChange={loginOnChangeHanlder}
+              name="email"
               placeholder="Enter Your Email"
               className="w-full bg-transparent rounded-2xl h-10"
             />
             <Input
-              type="password"
+              type={login.password}
+              onChange={loginOnChangeHanlder}
+              name="password"
               placeholder="Enter your password"
               className="w-full bg-transparent rounded-2xl h-10"
             />
-            <Button className="bg-red-700 hover:bg-red-800">Login</Button>
+            <Button
+              onClick={loginHandler}
+              className="bg-red-700 hover:bg-red-800"
+            >
+              Login
+            </Button>
           </TabsContent>
           {/* Signup */}
           <TabsContent
@@ -48,21 +98,32 @@ const Auth = () => {
             value="signup"
           >
             <Input
-              type="email"
+              type={signup.email}
+              onChange={singupOnChangeHanlder}
+              name="email"
               placeholder="Enter Your Email"
               className="w-full bg-transparent rounded-2xl h-10"
             />
             <Input
-              type="password"
+              type={signup.password}
+              onChange={singupOnChangeHanlder}
+              name="password"
               placeholder="Enter your password"
               className="w-full bg-transparent rounded-2xl h-10"
             />
             <Input
-              type="password"
+              type={signup.confirmPassword}
+              onChange={singupOnChangeHanlder}
               placeholder="confirm password"
+              name="confirmPassword"
               className="w-full bg-transparent rounded-2xl h-10"
             />
-            <Button className="bg-red-700 hover:bg-red-800">Signup</Button>
+            <Button
+              onClick={signupHandler}
+              className="bg-red-700 hover:bg-red-800"
+            >
+              Signup
+            </Button>
           </TabsContent>
         </Tabs>
       </div>
