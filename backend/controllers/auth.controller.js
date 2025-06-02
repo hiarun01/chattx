@@ -1,13 +1,13 @@
 import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 
-const maxAge = 3 * 24 * 60 * 60 * 100;
+const maxAge = 3 * 24 * 60 * 60 * 1000; // 3 days
 
 const createToken = (email, userId) => {
   return jwt.sign({email, userId}, process.env.JWT_KEY, {expiresIn: maxAge});
 };
 
-export const signup = async (req, res) => {
+export const signup = async (req, res, next) => {
   try {
     const {email, password} = req.body;
     if (!email || !password) {
@@ -15,7 +15,7 @@ export const signup = async (req, res) => {
     }
 
     const user = await User.create({email, password});
-    res.cookie("jwt", createToken(email, userId), {
+    res.cookie("jwt", createToken(email, user.id), {
       maxAge,
       secure: true,
       sameSite: "none",
@@ -23,7 +23,7 @@ export const signup = async (req, res) => {
 
     return res.status(201).json({
       id: user.id,
-      email: user.enail,
+      email: user.email,
       profileSetup: user.profileSetup,
     });
   } catch (error) {

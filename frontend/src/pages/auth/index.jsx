@@ -1,8 +1,11 @@
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
+import api from "@/services/api";
+import {SIGNUP_ROUTE} from "@/utils/constants";
 
 import {useState} from "react";
+import {toast} from "sonner";
 
 const Auth = () => {
   const [login, setLogin] = useState({
@@ -36,12 +39,41 @@ const Auth = () => {
     }));
   };
 
+  // signupValidations
+  const signupValidation = () => {
+    if (!signup.email.length) {
+      toast.error("Email is Required");
+      return false;
+    }
+    if (!signup.password.length) {
+      toast.error("Password is Required");
+      return false;
+    }
+    if (signup.confirmPassword !== signup.password) {
+      toast.error("Password and confirm Password should be same");
+      return false;
+    }
+    return true;
+  };
   const loginHandler = () => {
     console.log(login);
   };
 
-  const signupHandler = () => {
-    console.log(signup);
+  const signupHandler = async () => {
+    if (signupValidation()) {
+      const {email, password} = signup;
+      const response = await api.post(
+        SIGNUP_ROUTE,
+        {email, password}
+        // {
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   withCredentials: true,
+        // }
+      );
+      console.log(response);
+    }
   };
 
   return (
