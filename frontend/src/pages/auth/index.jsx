@@ -2,12 +2,15 @@ import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import api from "@/services/api";
-import {SIGNUP_ROUTE} from "@/utils/constants";
+import {LOGIN_ROUTE, SIGNUP_ROUTE} from "@/utils/constants";
 
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import {toast} from "sonner";
 
 const Auth = () => {
+  const navigate = useNavigate();
+
   const [login, setLogin] = useState({
     email: "",
     password: "",
@@ -55,8 +58,34 @@ const Auth = () => {
     }
     return true;
   };
-  const loginHandler = () => {
-    console.log(login);
+
+  // signupValidations
+  const loginValidation = () => {
+    if (!signup.email.length) {
+      toast.error("Email is Required");
+      return false;
+    }
+    if (!signup.password.length) {
+      toast.error("Password is Required");
+      return false;
+    }
+    return true;
+  };
+  const loginHandler = async () => {
+    const {email, password} = login;
+    if (loginValidation) {
+      const response = await api.post(
+        LOGIN_ROUTE,
+        {email, password},
+        {withCredentials: true}
+      );
+
+      if (response.data.id) {
+        if (response.data.profileSetup) navigate("/chat");
+        else navigate("/profile");
+      }
+      console.log(response);
+    }
   };
 
   const signupHandler = async () => {
@@ -64,15 +93,14 @@ const Auth = () => {
       const {email, password} = signup;
       const response = await api.post(
         SIGNUP_ROUTE,
-        {email, password}
-        // {
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   withCredentials: true,
-        // }
+        {email, password},
+        {
+          withCredentials: true,
+        }
       );
-      console.log(response);
+      if (response.status === 201) {
+        navigate("/profile");
+      }
     }
   };
 
