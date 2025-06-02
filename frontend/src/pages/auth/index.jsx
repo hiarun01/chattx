@@ -2,14 +2,16 @@ import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import api from "@/services/api";
+import {useAppStore} from "@/store/store";
 import {LOGIN_ROUTE, SIGNUP_ROUTE} from "@/utils/constants";
-
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {toast} from "sonner";
 
 const Auth = () => {
   const navigate = useNavigate();
+
+  const {setUserInfo} = useAppStore();
 
   const [login, setLogin] = useState({
     email: "",
@@ -71,22 +73,6 @@ const Auth = () => {
     }
     return true;
   };
-  const loginHandler = async () => {
-    const {email, password} = login;
-    if (loginValidation) {
-      const response = await api.post(
-        LOGIN_ROUTE,
-        {email, password},
-        {withCredentials: true}
-      );
-
-      if (response.data.id) {
-        if (response.data.profileSetup) navigate("/chat");
-        else navigate("/profile");
-      }
-      console.log(response);
-    }
-  };
 
   const signupHandler = async () => {
     if (signupValidation()) {
@@ -99,8 +85,27 @@ const Auth = () => {
         }
       );
       if (response.status === 201) {
+        setUserInfo(response.data.user);
         navigate("/profile");
       }
+    }
+  };
+
+  const loginHandler = async () => {
+    const {email, password} = login;
+    if (loginValidation) {
+      const response = await api.post(
+        LOGIN_ROUTE,
+        {email, password},
+        {withCredentials: true}
+      );
+
+      if (response.data.user.id) {
+        setUserInfo(response.data.user);
+        if (response.data.user.profileSetup) navigate("/chat");
+        else navigate("/profile");
+      }
+      console.log(response);
     }
   };
 
