@@ -2,15 +2,21 @@ import {Avatar, AvatarImage} from "@/components/ui/avatar";
 import {Input} from "@/components/ui/input";
 import api from "@/services/api";
 import {useAppStore} from "@/store/store";
-import {UPDATE_PROFILE_ROUTE} from "@/utils/constants";
+import {
+  ADD_PROFILE_IMG_ROUTE,
+  BASE_URL,
+  DELETE_PROFILE_IMAGE,
+  UPDATE_PROFILE_ROUTE,
+} from "@/utils/constants";
 import {ArrowLeft, CirclePlus, Trash} from "lucide-react";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {toast} from "sonner";
 
 const Profile = () => {
   const navigate = useNavigate();
   const {userInfo, setUserInfo} = useAppStore();
+  const fileInputRef = useRef(null);
 
   const [profile, setProfile] = useState({
     firstName: "",
@@ -20,8 +26,6 @@ const Profile = () => {
   });
 
   const {firstName, lastName, image, hovered} = profile;
-
-  console.log(firstName, lastName);
 
   // Helper for updating profile fields
   const updateProfile = (field, value) => {
@@ -36,6 +40,7 @@ const Profile = () => {
       ...prev,
       firstName: userInfo.firstName,
       lastName: userInfo.lastName,
+      image: userInfo.image ? `${BASE_URL}/${userInfo.image}` : "",
     }));
   }, [userInfo]);
 
@@ -73,11 +78,65 @@ const Profile = () => {
     }
   };
 
+  const handleNavigate = () => {
+    if (userInfo.profileSetup) {
+      navigate("/chat");
+    } else {
+      toast.error("please setup profile");
+    }
+  };
+
+  const handleFileInputClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("profile-image", file);
+      const response = await api.post(ADD_PROFILE_IMG_ROUTE, formData, {
+        withCredentials: true,
+      });
+      if (response.status === 200 && response.data.image) {
+        setUserInfo({...userInfo, ...response.data.image});
+        toast.success("Profile Image Updated successfully");
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        setProfile((prev) => ({
+          ...prev,
+          image: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  const handleFileDelete = async () => {
+    try {
+      const response = await api.delete(DELETE_PROFILE_IMAGE, {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        setUserInfo({...userInfo, image: null});
+        toast.success("Profile Image Remove successfully");
+        setProfile((prev) => ({
+          ...prev,
+          image: null,
+        }));
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-gray-100 px-2">
       <div className="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-6 md:p-10 flex flex-col gap-6">
         <div className="flex items-center gap-3 mb-2">
           <button
+            onClick={handleNavigate}
             className="p-2 rounded-full hover:bg-gray-100 transition"
             aria-label="Back"
           >
@@ -106,7 +165,10 @@ const Profile = () => {
               )}
             </Avatar>
             {hovered && (
-              <div className="absolute inset-0 flex items-center justify-center bg-white/60 rounded-full transition">
+              <div
+                onClick={image ? handleFileDelete : handleFileInputClick}
+                className="absolute inset-0 flex items-center justify-center bg-white/60 rounded-full transition"
+              >
                 {image ? (
                   <Trash className="text-black text-3xl cursor-pointer" />
                 ) : (
@@ -114,7 +176,16 @@ const Profile = () => {
                 )}
               </div>
             )}
+            <input
+              type="file"
+              name="profile-image"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              className="hidden"
+              accept=".png, .jpg, jpeg, .svg, .webp"
+            />
           </div>
+
           {/* Form Section */}
           <form className="flex-1 flex flex-col gap-5 w-full max-w-md">
             <Input
@@ -138,7 +209,7 @@ const Profile = () => {
               value={lastName}
               onChange={(e) => updateProfile("lastName", e.target.value)}
             />
-            {/* Add a Save button if needed */}
+
             <button
               type="submit"
               onClick={ProfileHandler}
