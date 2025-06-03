@@ -14,6 +14,8 @@ const Profile = () => {
     hovered: false,
   });
 
+  console.log(profile);
+
   const {firstName, lastName, image, hovered} = profile;
 
   // Helper for updating profile fields
@@ -65,7 +67,6 @@ const Profile = () => {
                 )}
               </div>
             )}
-            <span className="mt-3 text-gray-500 text-sm">{userInfo.email}</span>
           </div>
           {/* Form Section */}
           <form className="flex-1 flex flex-col gap-5 w-full max-w-md">
