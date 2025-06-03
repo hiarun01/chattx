@@ -66,7 +66,6 @@ export const login = async (req, res, next) => {
         firstName: user.firstName,
         lastName: user.lastName,
         image: user.image,
-        color: user.color,
       },
     });
   } catch (error) {
@@ -87,7 +86,6 @@ export const getUserInfo = async (req, res, next) => {
       firstName: userData.firstName,
       lastName: userData.lastName,
       image: userData.image,
-      color: userData.color,
     });
   } catch (error) {
     console.log(error.message);

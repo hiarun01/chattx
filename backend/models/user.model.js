@@ -19,10 +19,6 @@ const userSchema = mongoose.Schema({
     type: String,
     required: false,
   },
-  color: {
-    type: Number,
-    required: false,
-  },
   profileSetup: {
     type: Boolean,
     default: false,
