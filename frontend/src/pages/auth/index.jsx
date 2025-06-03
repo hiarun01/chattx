@@ -63,11 +63,11 @@ const Auth = () => {
 
   // signupValidations
   const loginValidation = () => {
-    if (!signup.email.length) {
+    if (!login.email.length) {
       toast.error("Email is Required");
       return false;
     }
-    if (!signup.password.length) {
+    if (!login.password.length) {
       toast.error("Password is Required");
       return false;
     }
@@ -93,7 +93,7 @@ const Auth = () => {
 
   const loginHandler = async () => {
     const {email, password} = login;
-    if (loginValidation) {
+    if (loginValidation()) {
       const response = await api.post(
         LOGIN_ROUTE,
         {email, password},
@@ -137,14 +137,16 @@ const Auth = () => {
             value="login"
           >
             <Input
-              type={login.email}
+              type="email"
+              value={login.email}
               onChange={loginOnChangeHanlder}
               name="email"
               placeholder="Enter Your Email"
               className="w-full bg-transparent rounded-2xl h-10"
             />
             <Input
-              type={login.password}
+              type="password"
+              value={login.password}
               onChange={loginOnChangeHanlder}
               name="password"
               placeholder="Enter your password"
@@ -163,21 +165,24 @@ const Auth = () => {
             value="signup"
           >
             <Input
-              type={signup.email}
+              type="email"
+              value={signup.email}
               onChange={singupOnChangeHanlder}
               name="email"
               placeholder="Enter Your Email"
               className="w-full bg-transparent rounded-2xl h-10"
             />
             <Input
-              type={signup.password}
+              type="password"
+              value={signup.password}
               onChange={singupOnChangeHanlder}
               name="password"
               placeholder="Enter your password"
               className="w-full bg-transparent rounded-2xl h-10"
             />
             <Input
-              type={signup.confirmPassword}
+              type="password"
+              value={signup.confirmPassword}
               onChange={singupOnChangeHanlder}
               placeholder="confirm password"
               name="confirmPassword"
