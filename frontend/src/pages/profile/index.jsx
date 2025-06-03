@@ -1,11 +1,16 @@
 import {Avatar, AvatarImage} from "@/components/ui/avatar";
 import {Input} from "@/components/ui/input";
+import api from "@/services/api";
 import {useAppStore} from "@/store/store";
+import {UPDATE_PROFILE_ROUTE} from "@/utils/constants";
 import {ArrowLeft, CirclePlus, Trash} from "lucide-react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {toast} from "sonner";
 
 const Profile = () => {
-  const {userInfo} = useAppStore();
+  const navigate = useNavigate();
+  const {userInfo, setUserInfo} = useAppStore();
 
   const [profile, setProfile] = useState({
     firstName: "",
@@ -14,9 +19,9 @@ const Profile = () => {
     hovered: false,
   });
 
-  console.log(profile);
-
   const {firstName, lastName, image, hovered} = profile;
+
+  console.log(firstName, lastName);
 
   // Helper for updating profile fields
   const updateProfile = (field, value) => {
@@ -24,6 +29,48 @@ const Profile = () => {
       ...prev,
       [field]: value,
     }));
+  };
+
+  useEffect(() => {
+    setProfile((prev) => ({
+      ...prev,
+      firstName: userInfo.firstName,
+      lastName: userInfo.lastName,
+    }));
+  }, [userInfo]);
+
+  const profileValidation = () => {
+    if (!firstName) {
+      toast.error("First Name is Required");
+      return false;
+    }
+    if (!lastName) {
+      toast.error("Last Name is Required");
+      return false;
+    }
+    return true;
+  };
+
+  const ProfileHandler = async (e) => {
+    e.preventDefault();
+
+    if (profileValidation()) {
+      try {
+        const response = await api.post(
+          UPDATE_PROFILE_ROUTE,
+          {firstName, lastName},
+          {withCredentials: true}
+        );
+
+        if (response.status === 200 && response.data) {
+          setUserInfo({...response.data});
+          toast.success("Profile update successfully");
+          navigate("/chat");
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
   };
 
   return (
@@ -94,6 +141,7 @@ const Profile = () => {
             {/* Add a Save button if needed */}
             <button
               type="submit"
+              onClick={ProfileHandler}
               className="mt-2 bg-red-700 hover:bg-red-800 text-white font-semibold py-2 rounded-xl transition"
             >
               Save Changes
