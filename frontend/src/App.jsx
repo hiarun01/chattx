@@ -1,8 +1,8 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Auth from "./pages/auth";
+import Auth from "./pages/auth/AuthPage";
 import {Navigate} from "react-router-dom";
-import Profile from "./pages/profile";
-import Chat from "./pages/chat";
+import Profile from "./pages/profile/Profile";
+import Chat from "./pages/chat/Chat";
 import {useAppStore} from "./store/store";
 import {useEffect, useState} from "react";
 import api from "./services/api";
