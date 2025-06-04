@@ -20,10 +20,10 @@ const Chat = () => {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-red-50 to-gray-100 flex items-center justify-center px-2">
-      <div className="w-full max-w-6xl h-[90vh] bg-white rounded-2xl shadow-lg flex flex-col md:flex-row overflow-hidden relative">
+      <div className="w-full max-w-7xl h-[90vh] bg-white rounded-2xl shadow-lg flex flex-col md:flex-row overflow-hidden relative">
         {/* Hamburger menu for mobile */}
         <button
-          className="absolute top-4 left-4 z-20 md:hidden bg-white p-2 rounded-full shadow"
+          className="absolute top-1 left-4 z-20 md:hidden bg-white p-2 rounded-full shadow"
           onClick={() => setSidebarOpen(true)}
           aria-label="Open contacts"
         >
@@ -32,26 +32,28 @@ const Chat = () => {
         {/* Sidebar for contacts */}
         <aside
           className={`
-            fixed inset-0 z-30 bg-black/30 transition md:static md:z-0 md:bg-transparent
-            ${sidebarOpen ? "block" : "hidden"} md:block
-          `}
+    fixed inset-0 z-30 bg-black/30 transition md:static md:z-0 md:bg-transparent
+    ${sidebarOpen ? "block" : "hidden"} md:block
+  `}
           onClick={() => setSidebarOpen(false)}
         >
           <div
             className={`
-              w-4/5 max-w-xs h-full bg-gray-50 border-r flex flex-col shadow-lg
-              transition-transform duration-300 ease-in-out
-              ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-              md:translate-x-0 md:relative md:w-full md:max-w-none md:h-auto md:shadow-none
-            `}
+      w-4/5 max-w-xs h-full bg-gray-50 border-r flex flex-col shadow-lg
+      transition-transform duration-300 ease-in-out
+      ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+      md:translate-x-0 md:relative md:w-full md:max-w-none md:h-auto md:shadow-none
+    `}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex-1 overflow-y-auto">
-              <ContactsContainer onClose={() => setSidebarOpen(false)} />
+            <div className="flex flex-col h-full">
+              <div className="flex-1 overflow-y-auto">
+                <ContactsContainer onClose={() => setSidebarOpen(false)} />
+              </div>
             </div>
           </div>
         </aside>
-        {/* Main chat area */}
+        {/*chat area */}
         <main className="flex-1 flex flex-col">
           <ChatContainer />
         </main>
