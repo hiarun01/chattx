@@ -23,5 +23,5 @@ authRoutes.post(
   upload.single("profile-image"),
   addProfileImage
 );
-authRoutes.delete("delete-profile-image", verifyToken, deleteProfileImage);
+authRoutes.delete("/delete-profile-image", verifyToken, deleteProfileImage);
 export default authRoutes;
