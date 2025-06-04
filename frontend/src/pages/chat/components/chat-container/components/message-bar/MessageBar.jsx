@@ -1,9 +1,8 @@
-import React, {useRef, useState} from "react";
+import React, {useState} from "react";
 import {Paperclip, Smile, Send} from "lucide-react";
 import EmojiPicker from "emoji-picker-react";
 
 const MessageBar = () => {
-  const emojiRef = useRef();
   const [message, setMessage] = useState("");
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
 
