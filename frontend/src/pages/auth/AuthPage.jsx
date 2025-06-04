@@ -110,8 +110,8 @@ const Auth = () => {
   };
 
   return (
-    <div className="h-[100vh] w-[100vw] flex items-center justify-center">
-      <div className=" lg:w-2xl items-center w-full mx-5 border rounded-2xl shadow-2xs p-5">
+    <div className="bg-gradient-to-br from-red-50 to-gray-100 h-[100vh] w-[100vw] flex items-center justify-center">
+      <div className="bg-white lg:w-2xl items-center w-full mx-5 border rounded-2xl shadow-2xs p-5">
         <div className="flex flex-col justify-center items-center my-5">
           <h1 className="font-bold text-2xl">Welcome!</h1>
           <p className="">Fill in the details!</p>
