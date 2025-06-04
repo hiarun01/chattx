@@ -19,7 +19,7 @@ const Chat = () => {
   }, [userInfo, navigate]);
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-red-50 to-gray-100 flex items-center justify-center px-2">
+    <div className="min-h-screen w-full bg-gradient-to-br from-red-50 to-gray-100 flex items-center justify-center px-5">
       <div className="w-full max-w-7xl h-[90vh] bg-white rounded-2xl shadow-lg flex flex-col md:flex-row overflow-hidden relative">
         {/* Hamburger menu for mobile */}
         <button
