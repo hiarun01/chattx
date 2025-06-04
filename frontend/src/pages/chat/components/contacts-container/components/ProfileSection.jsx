@@ -1,17 +1,33 @@
 import {AvatarImage} from "@/components/ui/avatar";
+import api from "@/services/api";
 import {useAppStore} from "@/store/store";
-import {BASE_URL} from "@/utils/constants";
+import {BASE_URL, LOGOUT_ROUTE} from "@/utils/constants";
 import {Avatar} from "@radix-ui/react-avatar";
 import React from "react";
 import {useNavigate} from "react-router-dom";
+import {toast} from "sonner";
 
 const ProfileSection = () => {
   const navigate = useNavigate();
-  const {userInfo} = useAppStore();
+  const {userInfo, setUserInfo} = useAppStore();
 
   // Add your logout logic here
-  const handleLogout = () => {
-    console.log("Logout clicked");
+  const handleLogout = async () => {
+    try {
+      const response = await api.post(
+        LOGOUT_ROUTE,
+        {},
+        {withCredentials: true}
+      );
+
+      if (response.status === 200) {
+        toast.success("Logout successfully");
+        setUserInfo(null);
+        navigate("/auth");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
