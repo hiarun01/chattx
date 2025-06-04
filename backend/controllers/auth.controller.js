@@ -155,7 +155,7 @@ export const addProfileImage = async (req, res) => {
   }
 };
 
-export const deleteProfileImage = async () => {
+export const deleteProfileImage = async (req, res) => {
   try {
     const {userId} = req;
     const user = await User.findById(userId);
