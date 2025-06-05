@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectDB from "./utils/db.js";
 import authRoutes from "./routes/auth.route.js";
+import contactRoute from "./routes/contact.route.js";
 
 dotenv.config({});
 
@@ -26,6 +27,7 @@ app.use("/uploads/profiles", express.static("uploads/profiles"));
 // api Routes
 
 app.use("/api/auth", authRoutes);
+app.use("/api/contacts", contactRoute);
 
 app.listen(PORT, () => {
   console.log(`Server listen at PORT ${PORT}`);

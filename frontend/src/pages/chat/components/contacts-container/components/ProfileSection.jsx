@@ -31,7 +31,7 @@ const ProfileSection = () => {
   };
 
   return (
-    <div className="w-full flex items-center gap-3 p-3 border-t bg-white">
+    <div className="w-full flex items-center gap-3 p-3 bg-white">
       <Avatar
         onClick={() => navigate("/profile")}
         className="w-10 h-10 rounded-full border shadow"
