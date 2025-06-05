@@ -20,7 +20,7 @@ const Chat = () => {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-red-50 to-gray-100 flex items-center justify-center px-5">
-      <div className="w-full max-w-7xl h-[90vh] bg-white rounded-2xl shadow-lg flex flex-col md:flex-row overflow-hidden relative">
+      <div className="w-full max-w-5xl h-[90vh] bg-white rounded-2xl shadow-lg flex flex-col md:flex-row overflow-hidden relative">
         {/* Hamburger menu for mobile */}
         <button
           className="absolute top-1 left-4 z-20 md:hidden bg-white p-2 rounded-full shadow"
