@@ -3,12 +3,13 @@ import ProfileSection from "./components/ProfileSection";
 import React, {useState, useEffect} from "react";
 import api from "@/services/api";
 import {BASE_URL, SEARCH_CONTACT_ROUTE} from "@/utils/constants";
-import {ScrollArea} from "@/components/ui/scroll-area";
 import {Avatar, AvatarImage} from "@radix-ui/react-avatar";
+import {Dialog, DialogContent} from "@/components/ui/dialog";
 
 const ContactsContainer = ({onClose}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchContacts, setSearchContacts] = useState([]);
+  const [searchDialogOpen, setSearchDialogOpen] = useState(false);
 
   const handleSearchContacts = async (term) => {
     try {
@@ -29,10 +30,11 @@ const ContactsContainer = ({onClose}) => {
     }
   };
 
-  // Call API when searchTerm changes
   useEffect(() => {
-    handleSearchContacts(searchTerm);
-  }, [searchTerm]);
+    if (searchDialogOpen) {
+      handleSearchContacts(searchTerm);
+    }
+  }, [searchTerm, searchDialogOpen]);
 
   return (
     <div className="flex flex-col h-[90vh] p-3 relative">
@@ -51,18 +53,38 @@ const ContactsContainer = ({onClose}) => {
       </div>
 
       {/* Search Contacts */}
-      <div className="space-y-3 pb-2">
+      <div className="pb-2">
         <input
           type="text"
           className="w-full px-3 py-2 rounded-lg border focus:outline-none"
           placeholder="Search contacts..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onFocus={() => setSearchDialogOpen(true)}
+          readOnly
         />
-        {/* Scroll area */}
-        <ScrollArea className="mt-2 h-[60vh]">
-          {Array.isArray(searchContacts) && searchContacts.length > 0
-            ? searchContacts.map((contact) => (
+      </div>
+
+      {/* Contacts List Area */}
+      <div className="flex-1 overflow-y-auto space-y-2">
+        <div className="text-gray-400 text-center py-8 select-none">
+          Contacts
+        </div>
+      </div>
+
+      {/* Search Dialog */}
+      <Dialog open={searchDialogOpen} onOpenChange={setSearchDialogOpen}>
+        <DialogContent className="fixed bottom-0 right-0">
+          <input
+            autoFocus
+            type="text"
+            className="rounded-lg focus:outline-none text-lg text-center px-5 "
+            placeholder="Search contacts..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <div className="mt-4 max-h-[50vh] overflow-y-auto">
+            {Array.isArray(searchContacts) && searchContacts.length > 0 ? (
+              searchContacts.map((contact) => (
                 <div
                   key={contact.id}
                   className="flex items-center gap-4 px-3 py-2 rounded-lg hover:bg-red-50 cursor-pointer transition mb-1 border"
@@ -90,11 +112,17 @@ const ContactsContainer = ({onClose}) => {
                   </div>
                 </div>
               ))
-            : null}
-        </ScrollArea>
-      </div>
+            ) : (
+              <div className="text-gray-400 text-center py-8">
+                No contacts found
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
 
-      <div>
+      {/* Profile Section at the bottom */}
+      <div className="mt-auto">
         <ProfileSection />
       </div>
     </div>
