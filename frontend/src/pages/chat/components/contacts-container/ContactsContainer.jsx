@@ -42,6 +42,7 @@ const ContactsContainer = ({onClose}) => {
     setSearchDialogOpen(false);
     setSearchTerm("");
     setSearchContacts([]);
+    onClose(false);
     setSelectedChatType("contact");
     setSelectedChatData(contact);
   };

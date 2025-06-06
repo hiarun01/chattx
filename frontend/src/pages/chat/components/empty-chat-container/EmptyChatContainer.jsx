@@ -3,8 +3,8 @@ import {MessageCircle} from "lucide-react";
 
 const EmptyChatContainer = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-full text-center text-gray-400 select-none bg-gradient-to-br from-red-50 to-white">
-      <div className="flex items-center justify-center w-24 h-24 rounded-full bg-red-100 mb-6 shadow-inner">
+    <div className="flex flex-col items-center justify-center h-full text-center text-gray-400 select-none bg-white">
+      <div className="flex items-center justify-center w-24 h-24 rounded-full bg-red-50 mb-6 shadow-inner">
         <MessageCircle className="w-14 h-14 text-red-300" />
       </div>
       <h2 className="text-3xl font-bold mb-2 text-gray-600">
