@@ -5,8 +5,10 @@ import api from "@/services/api";
 import {BASE_URL, SEARCH_CONTACT_ROUTE} from "@/utils/constants";
 import {Avatar, AvatarImage} from "@radix-ui/react-avatar";
 import {Dialog, DialogContent} from "@/components/ui/dialog";
+import {useAppStore} from "@/store/store";
 
 const ContactsContainer = ({onClose}) => {
+  const {setSelectedChatType, setSelectedChatData} = useAppStore();
   const [searchTerm, setSearchTerm] = useState("");
   const [searchContacts, setSearchContacts] = useState([]);
   const [searchDialogOpen, setSearchDialogOpen] = useState(false);
@@ -35,6 +37,14 @@ const ContactsContainer = ({onClose}) => {
       handleSearchContacts(searchTerm);
     }
   }, [searchTerm, searchDialogOpen]);
+
+  const selectNewContact = (contact) => {
+    setSearchDialogOpen(false);
+    setSearchTerm("");
+    setSearchContacts([]);
+    setSelectedChatType("contact");
+    setSelectedChatData(contact);
+  };
 
   return (
     <div className="flex flex-col h-[90vh] p-3 relative">
@@ -86,6 +96,7 @@ const ContactsContainer = ({onClose}) => {
             {Array.isArray(searchContacts) && searchContacts.length > 0 ? (
               searchContacts.map((contact) => (
                 <div
+                  onClick={() => selectNewContact(contact)}
                   key={contact.id}
                   className="flex items-center gap-4 px-3 py-2 rounded-lg hover:bg-red-50 cursor-pointer transition mb-1 border"
                 >
