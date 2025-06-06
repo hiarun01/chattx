@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import connectDB from "./utils/db.js";
 import authRoutes from "./routes/auth.route.js";
 import contactRoute from "./routes/contact.route.js";
+import socketSetup from "./socket.js";
 
 dotenv.config({});
 
@@ -29,7 +30,9 @@ app.use("/uploads/profiles", express.static("uploads/profiles"));
 app.use("/api/auth", authRoutes);
 app.use("/api/contacts", contactRoute);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server listen at PORT ${PORT}`);
   connectDB();
 });
+
+socketSetup(server);

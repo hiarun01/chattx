@@ -7,7 +7,7 @@ const ChatHeader = () => {
   const {closeChat, selectedChatData} = useAppStore();
 
   return (
-    <div className="w-full py-3 flex items-center justify-between bg-white border-b shadow-sm rounded-t-xl px-4">
+    <div className="w-full py-3 flex items-center justify-center bg-white border-b shadow-sm rounded-t-xl px-4">
       {/* User Info */}
       <div className="flex items-center gap-2">
         <Avatar className="w-10 h-10 rounded-full border shadow">
@@ -37,7 +37,7 @@ const ChatHeader = () => {
       {/* Close Button */}
       <button
         onClick={closeChat}
-        className="p-2 rounded-full hover:bg-red-50 transition"
+        className="p-2 px-5 rounded-full hover:bg-red-50 transition"
         aria-label="Close chat"
       >
         <X className="w-5 h-5 text-red-700" />
