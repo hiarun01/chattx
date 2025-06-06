@@ -5,9 +5,10 @@ import {toast} from "sonner";
 import ContactsContainer from "./components/contacts-container/ContactsContainer";
 import ChatContainer from "./components/chat-container/ChatContainer";
 import {Menu} from "lucide-react";
+import EmptyChatContainer from "./components/empty-chat-container/EmptyChatContainer";
 
 const Chat = () => {
-  const {userInfo} = useAppStore();
+  const {userInfo, selectedChatType} = useAppStore();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -55,7 +56,11 @@ const Chat = () => {
         </aside>
         {/*chat area */}
         <main className="flex-1 flex flex-col">
-          <ChatContainer />
+          {selectedChatType === undefined ? (
+            <EmptyChatContainer />
+          ) : (
+            <ChatContainer />
+          )}
         </main>
       </div>
     </div>
