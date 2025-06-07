@@ -98,7 +98,7 @@ const ContactsContainer = ({onClose}) => {
               searchContacts.map((contact) => (
                 <div
                   onClick={() => selectNewContact(contact)}
-                  key={contact.id}
+                  key={contact._id}
                   className="flex items-center gap-4 px-3 py-2 rounded-lg hover:bg-red-50 cursor-pointer transition mb-1 border"
                 >
                   <Avatar className="w-12 h-12 rounded-full border shadow">

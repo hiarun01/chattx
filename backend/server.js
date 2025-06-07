@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import connectDB from "./utils/db.js";
 import authRoutes from "./routes/auth.route.js";
 import contactRoute from "./routes/contact.route.js";
-import socketSetup from "./socket.js";
+import setupSocket from "./socket.js";
 
 dotenv.config({});
 
@@ -35,4 +35,4 @@ const server = app.listen(PORT, () => {
   connectDB();
 });
 
-socketSetup(server);
+setupSocket(server);

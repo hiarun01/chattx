@@ -2,7 +2,13 @@ import React, {useState} from "react";
 import {Paperclip, Smile, Send} from "lucide-react";
 import EmojiPicker from "emoji-picker-react";
 
+import {useAppStore} from "@/store/store";
+import {useSocket} from "@/context/SocketContext";
+
 const MessageBar = () => {
+  const socket = useSocket();
+  const {selectedChatData, selectedChatType, userInfo} = useAppStore();
+
   const [message, setMessage] = useState("");
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
 
@@ -11,7 +17,16 @@ const MessageBar = () => {
   };
 
   const handleSendMessage = async () => {
-    console.log(message);
+    if (!socket) return;
+    if (selectedChatType === "contact") {
+      socket.emit("sendMessage", {
+        sender: userInfo.id,
+        content: message,
+        recipient: selectedChatData.id,
+        messageType: "text",
+        fileUrl: undefined,
+      });
+    }
   };
   return (
     <div className="h-16 flex items-center px-4 bg-white rounded-b-xl ">
@@ -49,7 +64,7 @@ const MessageBar = () => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       />
-      {/* Send button with icon, small size */}
+
       <button
         onClick={handleSendMessage}
         className="ml-2 p-2 bg-red-700 text-white rounded-full hover:bg-red-800 transition flex items-center justify-center"
