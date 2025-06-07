@@ -105,7 +105,6 @@ const Auth = () => {
         if (response.data.user.profileSetup) navigate("/chat");
         else navigate("/profile");
       }
-      console.log(response);
     }
   };
 

@@ -7,7 +7,7 @@ const SocketContext = createContext(null);
 
 export const useSocket = () => {
   const socket = useContext(SocketContext);
-  return socket?.current;
+  return socket.current;
 };
 
 export const SocketProvider = ({children}) => {
@@ -20,9 +20,26 @@ export const SocketProvider = ({children}) => {
         withCredentials: true,
         query: {userId: userInfo.id},
       });
+      //  connection
       socket.current.on("connect", () => {
         console.log("connected to socket server");
       });
+
+      const handleReceiveMessage = (message) => {
+        const {selectedChatData, selectedChatType, addMessage} =
+          useAppStore.getState();
+
+        if (
+          selectedChatType !== undefined &&
+          (selectedChatData._id === message.sender._id ||
+            selectedChatData._id === message.recipient._id)
+        ) {
+          addMessage(message);
+          console.log("message :", message);
+        }
+      };
+
+      socket.current.on("receiveMessage", handleReceiveMessage);
 
       return () => {
         socket.current.disconnect();
