@@ -4,8 +4,10 @@ import React, {useState, useEffect} from "react";
 import api from "@/services/api";
 import {BASE_URL, SEARCH_CONTACT_ROUTE} from "@/utils/constants";
 import {Avatar, AvatarImage} from "@radix-ui/react-avatar";
-import {Dialog, DialogContent} from "@/components/ui/dialog";
+import {Dialog, DialogContent, DialogDescription} from "@/components/ui/dialog";
 import {useAppStore} from "@/store/store";
+import {DialogTitle} from "@radix-ui/react-dialog";
+import {Input} from "@/components/ui/input";
 
 const ContactsContainer = ({onClose}) => {
   const {setSelectedChatType, setSelectedChatData} = useAppStore();
@@ -13,12 +15,12 @@ const ContactsContainer = ({onClose}) => {
   const [searchContacts, setSearchContacts] = useState([]);
   const [searchDialogOpen, setSearchDialogOpen] = useState(false);
 
-  const handleSearchContacts = async (term) => {
+  const handleSearchContacts = async (searchTerm) => {
     try {
-      if (term.length > 0) {
+      if (searchTerm.length > 0) {
         const response = await api.post(
           SEARCH_CONTACT_ROUTE,
-          {searchTerm: term},
+          {searchTerm},
           {withCredentials: true}
         );
         if (response.status === 200 && response.data.contacts) {
@@ -48,13 +50,13 @@ const ContactsContainer = ({onClose}) => {
   };
 
   return (
-    <div className="flex flex-col h-[90vh] p-3 relative">
+    <div className="flex flex-col h-[90vh] p-3 relative bg-white">
       {/* Header */}
       <div className="flex items-center justify-between mb-4 border-b pb-3">
         <h2 className="font-bold text-red-700">Chattx</h2>
         {onClose && (
           <button
-            className="md:hidden p-2 bg-white rounded-full shadow border border-gray-200 hover:bg-gray-100 transition"
+            className="md:hidden p-2  rounded-full shadow border border-gray-200 hover:bg-gray-100 transition"
             onClick={onClose}
             aria-label="Close contacts"
           >
@@ -85,7 +87,11 @@ const ContactsContainer = ({onClose}) => {
       {/* Search Dialog */}
       <Dialog open={searchDialogOpen} onOpenChange={setSearchDialogOpen}>
         <DialogContent className="fixed bottom-0 right-0">
-          <input
+          <DialogTitle className="text-center font-bold">
+            Find Your Contact
+          </DialogTitle>
+          <DialogDescription></DialogDescription>
+          <Input
             autoFocus
             type="text"
             className="rounded-lg focus:outline-none text-lg text-center px-5 "

@@ -6,13 +6,14 @@ import {io} from "socket.io-client";
 const SocketContext = createContext(null);
 
 export const useSocket = () => {
-  const socket = useContext(SocketContext);
-  return socket.current;
+  return useContext(SocketContext);
 };
 
 export const SocketProvider = ({children}) => {
   const socket = useRef();
   const {userInfo} = useAppStore();
+
+  // console.log(userInfo);
 
   useEffect(() => {
     if (userInfo) {
@@ -34,8 +35,8 @@ export const SocketProvider = ({children}) => {
           (selectedChatData._id === message.sender._id ||
             selectedChatData._id === message.recipient._id)
         ) {
+          console.log("receive message :", message);
           addMessage(message);
-          console.log("message :", message);
         }
       };
 
@@ -48,6 +49,8 @@ export const SocketProvider = ({children}) => {
   }, [userInfo]);
 
   return (
-    <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
+    <SocketContext.Provider value={socket.current}>
+      {children}
+    </SocketContext.Provider>
   );
 };
