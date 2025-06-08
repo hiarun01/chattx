@@ -26,16 +26,8 @@ const setupSocket = (server) => {
   //  This function is called when a message is sent
   const sendMessage = async (message) => {
     const senderSocketId = userSocketMap.get(message.sender);
-    // if (!senderSocketId) {
-    //   console.error(" in backned : Sender socket ID not found");
-    //   return;
-    // }
 
     const recipientSocketId = userSocketMap.get(message.recipient);
-    // if (!recipientSocketId) {
-    //   console.error("in backned : Recipient socket ID not found");
-    //   return;
-    // }
 
     const createdMessage = await Message.create(message).catch((error) => {
       console.error("Error creating message:", error);
