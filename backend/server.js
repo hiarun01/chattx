@@ -6,6 +6,7 @@ import connectDB from "./utils/db.js";
 import authRoutes from "./routes/auth.route.js";
 import contactRoute from "./routes/contact.route.js";
 import setupSocket from "./socket.js";
+import messagesRoute from "./routes/messages.route.js";
 
 dotenv.config({});
 
@@ -29,6 +30,7 @@ app.use("/uploads/profiles", express.static("uploads/profiles"));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/contacts", contactRoute);
+app.use("/api/messages", messagesRoute);
 
 const server = app.listen(PORT, () => {
   console.log(`Server listen at PORT ${PORT}`);
