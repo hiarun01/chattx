@@ -55,7 +55,7 @@ const MessageContainer = () => {
       return (
         <div key={index}>
           {showDate && (
-            <div className=" text-black my-2">
+            <div className=" text-black my-2 text-center">
               {moment(message.timestamp).format("LL")}
             </div>
           )}

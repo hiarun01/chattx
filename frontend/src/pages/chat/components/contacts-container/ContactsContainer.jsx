@@ -1,8 +1,12 @@
-import {X} from "lucide-react";
+import {ClockFading, X} from "lucide-react";
 import ProfileSection from "./components/ProfileSection";
 import React, {useState, useEffect} from "react";
 import api from "@/services/api";
-import {BASE_URL, SEARCH_CONTACT_ROUTE} from "@/utils/constants";
+import {
+  BASE_URL,
+  GET_DM_CONTACTS_ROUTE,
+  SEARCH_CONTACT_ROUTE,
+} from "@/utils/constants";
 import {Avatar, AvatarImage} from "@radix-ui/react-avatar";
 import {Dialog, DialogContent, DialogDescription} from "@/components/ui/dialog";
 import {useAppStore} from "@/store/store";
@@ -39,6 +43,19 @@ const ContactsContainer = ({onClose}) => {
       handleSearchContacts(searchTerm);
     }
   }, [searchTerm, searchDialogOpen]);
+
+  useEffect(() => {
+    const getContacts = async () => {
+      const response = await api.get(GET_DM_CONTACTS_ROUTE, {
+        withCredentials: true,
+      });
+
+      if (response.data.contacts) {
+        console.log(response.data.contacts);
+      }
+    };
+    getContacts();
+  }, []);
 
   const selectNewContact = (contact) => {
     setSearchDialogOpen(false);
