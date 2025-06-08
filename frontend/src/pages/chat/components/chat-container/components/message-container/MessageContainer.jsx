@@ -24,7 +24,7 @@ const MessageContainer = () => {
       return (
         <div key={index}>
           {showDate && (
-            <div className="text-center text-black my-2">
+            <div className=" text-black my-2">
               {moment(message.timestamp).format("LL")}
             </div>
           )}
@@ -37,20 +37,24 @@ const MessageContainer = () => {
   const renderDMMessages = (message) => {
     return (
       <div
-        className={`${
+        className={`"" ${
           message.sender === selectedChatData._id ? "text-left" : "text-right"
         }`}
       >
         {message.messageType === "text" && (
-          <div className=" border p-2">{message.content}</div>
+          <div className="p-2 inline-block border px-5 rounded-2xl">
+            {message.content}
+          </div>
         )}
 
-        <div> {moment(message.timestamp).format("LT")}</div>
+        <div className="text-xs text-gray-300 mt-1 ">
+          {moment(message.timestamp).format("LT")}
+        </div>
       </div>
     );
   };
   return (
-    <div className="flex-1 flex flex-col items-center  justify-center bg-gray-50 overflow-y-auto rounded-xl mx-2 my-2 ">
+    <div className="flex-1 justify-center scroll-hidden bg-gray-50 scroll-hidden overflow-y-auto rounded-xl mx-2 my-2 p-5">
       {renderMessages()}
       <div ref={scrollRef} />
     </div>
