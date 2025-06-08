@@ -10,6 +10,7 @@ const MessageBar = () => {
   const {selectedChatData, selectedChatType, userInfo} = useAppStore();
 
   const [message, setMessage] = useState("");
+
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
 
   const handleAddEmoji = (emoji) => {
@@ -17,17 +18,17 @@ const MessageBar = () => {
   };
 
   const handleSendMessage = async () => {
-    if (!socket) return;
     if (selectedChatType === "contact") {
       socket.emit("sendMessage", {
         sender: userInfo.id,
+        recipient: selectedChatData._id,
         content: message,
-        recipient: selectedChatData.id,
         messageType: "text",
         fileUrl: undefined,
       });
     }
   };
+
   return (
     <div className="h-16 flex items-center px-4 bg-white rounded-b-xl ">
       {/* File attachment button */}
