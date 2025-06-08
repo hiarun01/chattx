@@ -1,4 +1,4 @@
-import {ClockFading, X} from "lucide-react";
+import {X} from "lucide-react";
 import ProfileSection from "./components/ProfileSection";
 import React, {useState, useEffect} from "react";
 import api from "@/services/api";
@@ -12,9 +12,15 @@ import {Dialog, DialogContent, DialogDescription} from "@/components/ui/dialog";
 import {useAppStore} from "@/store/store";
 import {DialogTitle} from "@radix-ui/react-dialog";
 import {Input} from "@/components/ui/input";
+import ContactsList from "./components/ContactsList";
 
 const ContactsContainer = ({onClose}) => {
-  const {setSelectedChatType, setSelectedChatData} = useAppStore();
+  const {
+    setSelectedChatType,
+    setSelectedChatData,
+    setDirectMessageContacts,
+    directMessageContacts,
+  } = useAppStore();
   const [searchTerm, setSearchTerm] = useState("");
   const [searchContacts, setSearchContacts] = useState([]);
   const [searchDialogOpen, setSearchDialogOpen] = useState(false);
@@ -51,6 +57,7 @@ const ContactsContainer = ({onClose}) => {
       });
 
       if (response.data.contacts) {
+        setDirectMessageContacts(response.data.contacts);
         console.log(response.data.contacts);
       }
     };
@@ -70,7 +77,7 @@ const ContactsContainer = ({onClose}) => {
     <div className="flex flex-col h-[90vh] p-3 relative bg-white">
       {/* Header */}
       <div className="flex items-center justify-between mb-4 border-b pb-3">
-        <h2 className="font-bold text-red-700">Chattx</h2>
+        <h2 className="font-extrabold text-red-700 ">Chattx</h2>
         {onClose && (
           <button
             className="md:hidden p-2  rounded-full shadow border border-gray-200 hover:bg-gray-100 transition"
@@ -96,8 +103,8 @@ const ContactsContainer = ({onClose}) => {
 
       {/* Contacts List Area */}
       <div className="flex-1 overflow-y-auto space-y-2">
-        <div className="text-gray-400 text-center py-8 select-none">
-          Contacts
+        <div className="text-gray-400 text-center py-2 select-none">
+          <ContactsList contacts={directMessageContacts} />
         </div>
       </div>
 
