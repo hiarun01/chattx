@@ -14,13 +14,23 @@ const app = express();
 
 const PORT = process.env.PORT || 7000;
 
-app.use(
-  cors({
-    origin: process.env.ORIGIN,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    credentials: true,
-  })
-);
+const mode = process.env.MODE
+
+if (mode === "dev") {
+  app.use(
+    cors({
+      origin: process.env.ORIGIN,
+      credentials: true,
+    })
+  );
+} else if (mode === "prod") {
+  app.use(
+    cors({
+      origin: "https://chattx.vercel.app",
+      credentials: true,
+    })
+  );
+}
 
 app.use(cookieParser());
 app.use(express.json());
