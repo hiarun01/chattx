@@ -33,10 +33,10 @@ const MessageBar = () => {
   return (
     <div className="h-16 flex items-center px-4 bg-white rounded-b-xl ">
       {/* File attachment button */}
-      <label className="cursor-pointer flex items-center mr-2">
+      {/* <label className="cursor-pointer flex items-center mr-2">
         <Paperclip className="w-5 h-5 text-gray-500 hover:text-red-700 transition" />
         <input type="file" className="hidden" />
-      </label>
+      </label> */}
       {/* Sticker/emoji button */}
       <div className="relative">
         <button

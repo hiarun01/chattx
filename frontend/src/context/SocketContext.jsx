@@ -36,7 +36,6 @@ export const SocketProvider = ({children}) => {
           (selectedChatData._id === message.sender._id ||
             selectedChatData._id === message.recipient._id)
         ) {
-          console.log("receive message :", message);
           addMessage(message);
         }
       };
