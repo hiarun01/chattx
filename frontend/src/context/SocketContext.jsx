@@ -6,7 +6,8 @@ import {io} from "socket.io-client";
 const SocketContext = createContext(null);
 
 export const useSocket = () => {
-  return useContext(SocketContext);
+  const socket = useContext(SocketContext);
+  return socket?.current;
 };
 
 export const SocketProvider = ({children}) => {
@@ -49,8 +50,6 @@ export const SocketProvider = ({children}) => {
   }, [userInfo]);
 
   return (
-    <SocketContext.Provider value={socket.current}>
-      {children}
-    </SocketContext.Provider>
+    <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
   );
 };

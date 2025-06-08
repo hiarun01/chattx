@@ -9,7 +9,7 @@ const ChatContainer = () => {
       {/* Chat header */}
       <ChatHeader />
       {/* Chat messages */}
-      <div className="flex-1 flex flex-col justify-center">
+      <div className="flex-1 flex flex-col">
         <MessageContainer />
       </div>
       {/* Message input bar */}
