@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 7000;
 
 const mode = process.env.MODE;
 
+
 if (mode === "dev") {
   app.use(
     cors({
