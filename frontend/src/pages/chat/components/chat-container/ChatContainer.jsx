@@ -5,7 +5,7 @@ import ChatHeader from "./components/chat-header/ChatHeader";
 
 const ChatContainer = () => {
   return (
-    <section className="flex-1 flex flex-col bg-white rounded-xl shadow-2xs">
+    <section className="flex-1 h-[80vh] flex flex-col bg-white rounded-xl shadow-2xs">
       {/* Chat header */}
       <ChatHeader />
       {/* Chat messages */}

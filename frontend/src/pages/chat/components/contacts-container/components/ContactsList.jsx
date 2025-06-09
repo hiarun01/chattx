@@ -2,7 +2,7 @@ import {Avatar, AvatarImage} from "@/components/ui/avatar";
 import {useAppStore} from "@/store/store";
 import {BASE_URL} from "@/utils/constants";
 
-const ContactsList = ({contacts, isChannel = false}) => {
+const ContactsList = ({contacts, isChannel = false, onClose}) => {
   const {
     selectedChatData,
     setSelectedChatData,
@@ -16,6 +16,7 @@ const ContactsList = ({contacts, isChannel = false}) => {
     setSelectedChatData(contact);
     if (selectedChatData && selectedChatData._id !== contact._id) {
       setSelectedChatMessages([]);
+      onClose(false);
     }
   };
 
