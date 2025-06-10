@@ -104,7 +104,7 @@ const ContactsContainer = ({onClose}) => {
       </div>
 
       {/* Contacts List Area */}
-      <div className="flex-1 overflow-y-auto space-y-2">
+      <div className="flex-1 overflow-y-auto hide-scroll space-y-2">
         <div className="text-gray-400 text-center py-2 select-none">
           <ContactsList onClose={onClose} contacts={directMessageContacts} />
         </div>
