@@ -5,14 +5,12 @@ import ChatHeader from "./components/chat-header/ChatHeader";
 
 const ChatContainer = () => {
   return (
-    <section className="flex-1 h-[80vh] flex flex-col bg-white rounded-xl shadow-2xs">
-      {/* Chat header */}
+    // Make sure the parent section fills the available space
+    <section className="flex flex-col h-[90vh] bg-white rounded-xl shadow-2xs">
       <ChatHeader />
-      {/* Chat messages */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 min-h-0 flex flex-col">
         <MessageContainer />
       </div>
-      {/* Message input bar */}
       <div className="px-2 pb-2">
         <MessageBar />
       </div>

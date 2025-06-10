@@ -84,8 +84,9 @@ const MessageContainer = () => {
       </div>
     );
   };
+
   return (
-    <div className="flex-1 justify-center scroll-hidden bg-gray-50 scroll-hidden overflow-y-auto rounded-xl mx-2 my-2 p-5">
+    <div className="flex-1 min-h-0 flex flex-col justify-start bg-gray-50 overflow-y-auto rounded-xl mx-2 my-2 p-4 hide-scrollbar smooth-scroll">
       {renderMessages()}
       <div ref={scrollRef} />
     </div>
