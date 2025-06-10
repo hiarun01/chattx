@@ -76,8 +76,10 @@ const ContactsContainer = ({onClose}) => {
   return (
     <div className="flex flex-col h-[90vh] p-3 relative bg-white">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4 border-b pb-3">
-        <h2 className="font-extrabold text-red-700 ">Chattx</h2>
+      <div className="flex items-center justify-between mb-4 border-b">
+        <h2 className="font-extrabold inline-block w-full lg:text-center py-3 text-red-700 ">
+          Chattx
+        </h2>
         {onClose && (
           <button
             className="md:hidden p-2  rounded-full shadow border border-gray-200 hover:bg-gray-100 transition"
